@@ -26,7 +26,7 @@ export default function ExamList() {
         }
     };
 
-    const getClassName = (classId: number) => {
+    const _getClassName = (classId: number) => {
         return classes.find(c => c.id === classId)?.name || 'N/A';
     };
 

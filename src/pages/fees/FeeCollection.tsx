@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { db, generateReceiptNumber, syncFeeTransaction } from '../../db/database';
-import type { Student, Class, FeeStructure, PaymentMode } from '../../types';
+import type { Student, Class, PaymentMode } from '../../types';
 import jsPDF from 'jspdf';
 
 export default function FeeCollection() {
     const [students, setStudents] = useState<Student[]>([]);
     const [classes, setClasses] = useState<Class[]>([]);
-    const [feeStructures, setFeeStructures] = useState<FeeStructure[]>([]);
     const [transactions, setTransactions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -31,16 +30,14 @@ export default function FeeCollection() {
 
     const loadData = async () => {
         try {
-            const [allStudents, allClasses, allFees, allTransactions] = await Promise.all([
+            const [allStudents, allClasses, allTransactions] = await Promise.all([
                 db.students.where('status').equals('active').toArray(),
                 db.classes.toArray(),
-                db.feeStructures.where('isActive').equals(1).toArray(),
                 db.feeTransactions.orderBy('createdAt').reverse().limit(10).toArray(),
             ]);
 
             setStudents(allStudents);
             setClasses(allClasses);
-            setFeeStructures(allFees);
             setTransactions(allTransactions);
         } catch (error) {
             console.error('Error loading data:', error);

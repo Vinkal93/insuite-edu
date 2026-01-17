@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../db/database';
-import type { FeeStructure, Class } from '../../types';
+import type { FeeStructure } from '../../types';
 
 export default function FeeStructurePage() {
     const [feeStructures, setFeeStructures] = useState<FeeStructure[]>([]);
-    const [classes, setClasses] = useState<Class[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,12 +12,8 @@ export default function FeeStructurePage() {
 
     const loadData = async () => {
         try {
-            const [fees, allClasses] = await Promise.all([
-                db.feeStructures.toArray(),
-                db.classes.toArray(),
-            ]);
+            const fees = await db.feeStructures.toArray();
             setFeeStructures(fees);
-            setClasses(allClasses);
         } catch (error) {
             console.error('Error loading data:', error);
         } finally {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../db/database';
-import type { Student, Class, Exam } from '../../types';
+import type { Student, Class } from '../../types';
 
 export default function MarksEntry() {
     const [students, setStudents] = useState<Student[]>([]);
@@ -167,8 +167,8 @@ export default function MarksEntry() {
                                         </td>
                                         <td>
                                             <span className={`badge ${grade === 'A+' || grade === 'A' ? 'badge-success' :
-                                                    grade === 'B+' || grade === 'B' ? 'badge-primary' :
-                                                        grade === 'C' || grade === 'D' ? 'badge-warning' : 'badge-danger'
+                                                grade === 'B+' || grade === 'B' ? 'badge-primary' :
+                                                    grade === 'C' || grade === 'D' ? 'badge-warning' : 'badge-danger'
                                                 }`}>
                                                 {grade}
                                             </span>

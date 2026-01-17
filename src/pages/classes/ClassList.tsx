@@ -5,7 +5,7 @@ import type { Class } from '../../types';
 export default function ClassList() {
     const [classes, setClasses] = useState<Class[]>([]);
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
+    const [, setShowModal] = useState(false);
 
     useEffect(() => {
         loadData();
@@ -20,10 +20,6 @@ export default function ClassList() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const getStudentCount = async (classId: number) => {
-        return await db.students.where('classId').equals(classId).count();
     };
 
     if (loading) {

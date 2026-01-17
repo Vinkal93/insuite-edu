@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { db } from '../db/database';
 import {
-    auth,
     loginWithEmail,
     signupWithEmail,
     logoutUser,
