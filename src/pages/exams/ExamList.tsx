@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../db/database';
-import type { Exam, Class } from '../../types';
+import type { Exam } from '../../types';
 
 export default function ExamList() {
     const [exams, setExams] = useState<Exam[]>([]);
-    const [classes, setClasses] = useState<Class[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,12 +12,8 @@ export default function ExamList() {
 
     const loadData = async () => {
         try {
-            const [allExams, allClasses] = await Promise.all([
-                db.exams.toArray(),
-                db.classes.toArray(),
-            ]);
+            const allExams = await db.exams.toArray();
             setExams(allExams);
-            setClasses(allClasses);
         } catch (error) {
             console.error('Error loading data:', error);
         } finally {
@@ -26,9 +21,7 @@ export default function ExamList() {
         }
     };
 
-    const _getClassName = (classId: number) => {
-        return classes.find(c => c.id === classId)?.name || 'N/A';
-    };
+    // Note: getClassName will be used when displaying class info in exam cards
 
     const formatDate = (date: Date) => {
         return new Date(date).toLocaleDateString('en-IN', {

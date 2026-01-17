@@ -79,21 +79,7 @@ function serializeForFirestore(data: Record<string, unknown>): Record<string, un
     return serialized;
 }
 
-// Convert Firestore Timestamps back to Date objects (for future pull operations)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _deserializeFromFirestore(data: Record<string, unknown>): Record<string, unknown> {
-    const deserialized: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(data)) {
-        if (value instanceof Timestamp) {
-            deserialized[key] = value.toDate();
-        } else if (value && typeof value === 'object' && !Array.isArray(value)) {
-            deserialized[key] = _deserializeFromFirestore(value as Record<string, unknown>);
-        } else {
-            deserialized[key] = value;
-        }
-    }
-    return deserialized;
-}
+// Note: deserializeFromFirestore removed - will be added when implementing pull operations from Firestore
 
 // Generate a unique Firestore document ID from local ID
 function generateFirestoreId(collectionName: string, localId: number): string {
